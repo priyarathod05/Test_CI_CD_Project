@@ -3,49 +3,49 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on push to main branch
   pull_request:
     branches:
-      - main
+      - main  # Trigger on pull request to main branch
 
 jobs:
-  ci:
-    runs-on: ubuntu-latest
-
+  build:
+    runs-on: windows-latest
+    
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
+      # Step 2: Set up PHP and install dependencies via Composer
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
-      
-      - name: Install dependencies
-        run: |
-          composer install --prefer-dist --no-interaction
-          npm install
+          php-version: '8.1'  # Specify the PHP version you're using
 
-      - name: Run tests
-        run: |
-          composer run test
-          npm run test
+      # Step 3: Install PHP dependencies using Composer
+      - name: Install PHP dependencies
+        run: composer install --prefer-dist --no-interaction
 
-  cd:
-    needs: ci
-    runs-on: ubuntu-latest
-    if: success()
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up PHP for deployment
-        uses: shivammathur/setup-php@v2
+      # Step 4: Set up Node.js (if you also have npm dependencies)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          php-version: '8.2'
+          node-version: '16'  # Specify the Node.js version you're using
 
-      - name: Deploy Application (example)
+      # Step 5: Install Node.js dependencies (if applicable)
+      - name: Install npm dependencies
+        run: npm install
+
+      # Step 6: Run tests (for PHPUnit or any other testing tool you use)
+      - name: Run PHP tests
+        run: vendor\bin\phpunit
+
+      # Step 7: Optionally build the project if needed
+      - name: Build the project (optional)
+        run: npm run build
+
+      # Step 8: Deploy (if needed)
+      - name: Deploy
         run: |
-          # Add commands to deploy your application here
-          echo "Deploying app..."
+          echo "Deploying project..."
