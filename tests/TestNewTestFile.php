@@ -10,7 +10,7 @@ class TestNewTestFile extends TestCase
 
         try {
             // Include the file to test
-            include 'path/to/new_test_file.php'; // Replace with the correct path
+            include 'new_test_file.php'; // Replace with the correct path
 
             // Clean output buffer (if file executes successfully)
             ob_end_clean();
@@ -21,7 +21,7 @@ class TestNewTestFile extends TestCase
             // Clean output buffer in case of an error
             ob_end_clean();
 
-            // Assert that the error message contains "syntax error"
+            // Assert that the error message contains a "syntax error"
             $this->assertStringContainsString("syntax error", $e->getMessage());
         }
     }
