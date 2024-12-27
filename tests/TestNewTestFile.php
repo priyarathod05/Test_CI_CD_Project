@@ -12,11 +12,12 @@ class TestNewTestFile extends TestCase
             // Include the file to test
             include 'new_test_file.php'; // Replace with the correct path
 
-            // Clean output buffer (if file executes successfully)
-            ob_end_clean();
+			// Capture the output
+            $output = ob_get_clean();
 
-            // If no exception occurs, the test should fail
-            $this->fail("No syntax error detected in the file.");
+            // Assertions to validate the output
+            $this->assertNotEmpty($output, "The output should not be empty.");
+            $this->assertStringContainsString("Hello World!", $output);
         } catch (\ParseError $e) {
             // Clean output buffer in case of an error
             ob_end_clean();
