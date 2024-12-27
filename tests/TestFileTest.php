@@ -5,15 +5,23 @@ class TestFileTest extends TestCase
 {
     public function testFileExecution()
     {
-        // Capture the output of the file
+        // Start output buffering
         ob_start();
-        include 'my_fist_test_project.php';
-        $output = ob_get_clean();
 
-        // Check if output contains expected content
-        $this->assertStringContainsString("Hello World!", $output);
+        try {
+            // Include the file to test
+            include 'my_fist_test_project.php';
 
-        // Test for errors
-        $this->assertNotFalse($output, "An error occurred in test.php execution.");
+            // Capture the output
+            $output = ob_get_clean();
+
+            // Assertions to validate the output
+            $this->assertNotEmpty($output, "The output should not be empty.");
+            $this->assertStringContainsString("Hello World!", $output);
+        } catch (\Throwable $e) {
+            // Clean the buffer in case of errors
+            ob_end_clean();
+            throw $e;
+        }
     }
 }
