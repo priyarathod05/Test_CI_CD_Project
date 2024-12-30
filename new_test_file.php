@@ -8,7 +8,7 @@ ini_set('display_errors', 1);  // Display errors
 
 <?php  
 for ($x = 0; $x <= 3; $x++) {
-  echo "The number is: $x <br>"
+  echo "The number is: $x <be>";
 }
 ?>
 
