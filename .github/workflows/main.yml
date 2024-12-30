@@ -26,6 +26,6 @@ jobs:
       run: chmod +x vendor/bin/phpstan
 
     - name: Run PHPStan
-      run: vendor/bin/phpstan analyse app --level=max
+      run: vendor/bin/phpstan analyse
 
 
