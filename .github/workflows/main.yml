@@ -1,4 +1,4 @@
-name: PHPStan Analysis
+name: Core PHP CI
 
 on:
   push:
@@ -22,5 +22,9 @@ jobs:
     - name: Install dependencies
       run: composer install --no-progress --prefer-dist
 
+    - name: Fix PHPStan permissions
+      run: chmod +x vendor/bin/phpstan
+
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse
+
